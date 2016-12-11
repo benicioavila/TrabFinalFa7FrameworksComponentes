@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:composition template="_template.xhtml">
+	
+<!-- 		<f:metadata> -->
+<!-- 			<f:viewParam name="livroId" value="#{reservaBean.livro.id}" /> -->
+<!-- 			<f:viewAction action="#{reservaBean.carregarLivroPelaId}" if="#{param.livroId != null}" /> -->
+<!-- 		</f:metadata> -->
+	
+
+		<ui:define name="titulo">
+				<p:outputPanel>Nova Reserva</p:outputPanel>
+		</ui:define>
+
+		<ui:define name="conteudo">
+			<h:form id="formLivro">
+
+				<p:messages id="messages" />
+	
+				<p:fieldset legend="Dados da Reserva">
+
+					<p:panelGrid columns="4">
+						<p:outputLabel value="Selecione o Livro" for="livro" />
+						<p:selectOneMenu value="#{reservaBean.livroId}" id="livro">
+							<f:selectItems value="#{reservaBean.livros}" var="livro" itemLabel="#{livro.titulo}" itemValue="#{livro.id}" />
+						</p:selectOneMenu>
+						<p:commandButton value="Adicionar" action="#{reservaBean.gravarReserva}" 
+								process="@this livro" update="tabelaReservas">
+						</p:commandButton>
+		
+						
+					</p:panelGrid>
+					
+					<p:dataTable value="#{reservaBean.reserva.livros}" var="reserva" id="tabelaReservas" emptyMessage="Nenhuma reserva">
+						<p:column>
+							<h:outputText value="#{reserva.titulo}" />
+						</p:column>
+						<p:column>
+							<p:commandLink value="X" action="#{reservaBean.removerReservaDoLivro(reserva)}" update="tabelaReservas" process="@this"/>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+					<br />
+				<p:fieldset style="text-align:center;">
+					<p:commandButton value="Gravar Reserva" action="#{reservaBean.gravar}" process="@form" 
+							 />
+				</p:fieldset>
+			</h:form>
+			
+			<br />
+			<br />			
+		</ui:define>
+	</ui:composition>
+
+</html>

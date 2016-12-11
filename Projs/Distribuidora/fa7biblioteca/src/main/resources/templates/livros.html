@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout">
+    
+<head>
+	<title>Livros</title>
+</head>
+
+<section layout:fragment="content">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+	   			<h1 class="panel-title aw-titulo-panel" style="float: left">Pesquisa de livros</h1>
+	   		</div>
+	   	</div>
+	   	
+	   	<div class="panel-body">
+	   		<table class="table table-bordered table-striped">
+	   			<thead>
+	   				<tr>
+	   					<th class="text-center col-md-1">#</th>
+	   					<th>Nome</th>
+	   					<th class="text-center col-md-2">Quantidade</th>
+	   					<th class="text-center col-md-1">Editar</th>
+	   				</tr>
+	   			</thead>
+	   			<tbody>
+	   				<tr th:each="livro : ${todosLivros}">
+	   					<td class="text-center" th:text="${livro.id}"></td>
+	   					<td th:text="${livro.nome}"></td>
+	   					<td class="text-center" th:text="${livro.quantidade}"></td>
+	   					<td class="text-center">
+	   						<a class="btn btn-link btn-xs" th:href="@{/livro/{id}(id=${livro.id})}">
+	   							<span class="glyphicon glyphicon-pencil"></span>
+							</a>
+						</td>
+	   				</tr>
+	   				<tr>
+	   					<td colspan="6" th:if="${#lists.isEmpty(todosLivros)}">Nenhum livro foi encontrado</td>
+	   				</tr>
+	   				
+	   			</tbody>
+	   		</table>
+	   	</div>
+	   	
+	   	<div layout:include="confirm"></div>
+	   	
+	</div>
+</section>
+</html>
